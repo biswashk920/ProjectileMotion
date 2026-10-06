@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Cannon Lab</title>
+  <link rel="stylesheet" href="https://pyscript.net/releases/2024.11.1/core.css">
+  <script type="module" src="https://pyscript.net/releases/2024.11.1/core.js"></script>
+  <style>
+    body { margin:0; background:#0f172a; color:#e2e8f0; font-family:system-ui,sans-serif;
+           display:flex; flex-direction:column; align-items:center; padding:12px; }
+    h1 { font-size:1.2rem; margin:4px 0 10px; }
+    canvas { width:100%; max-width:900px; height:auto; border-radius:10px; background:#1e293b; }
+    .panel { display:flex; flex-wrap:wrap; gap:14px 22px; align-items:center; justify-content:center;
+             margin-top:12px; max-width:900px; }
+    label { display:flex; flex-direction:column; font-size:.85rem; gap:4px; min-width:170px; }
+    label.inline { flex-direction:row; align-items:center; min-width:auto; gap:6px; }
+    button { padding:10px 20px; border:0; border-radius:8px; font-size:1rem; cursor:pointer; font-weight:600; }
+    #launch { background:#f97316; color:#fff; }
+    #clear  { background:#334155; color:#e2e8f0; }
+    #loading { color:#94a3b8; font-size:.9rem; }
+    input:disabled { opacity:.35; }
+  </style>
+</head>
+<body>
+  <h1>🎯 Cannon Lab</h1>
+  <canvas id="c" width="900" height="500"></canvas>
+  <div class="panel">
+    <label>Angle: <b id="angleVal">45°</b>
+      <input id="angle" type="range" min="0" max="90" value="45"></label>
+    <label>Velocity: <b id="velVal">60 m/s</b>
+      <input id="vel" type="range" min="10" max="100" value="60"></label>
+    <label>Sim speed: <b id="speedVal">1.0x</b>
+      <input id="speed" type="range" min="0.5" max="8" step="0.5" value="1"></label>
+  </div>
+  <div class="panel">
+    <label class="inline"><input id="rebound" type="checkbox"> Rebound</label>
+    <label>Bounciness: <b id="restVal">0.70</b>
+      <input id="rest" type="range" min="0.2" max="0.95" step="0.05" value="0.7" disabled></label>
+    <label class="inline"><input id="follow" type="checkbox"> Moving frame (follow ball)</label>
+    <label class="inline"><input id="guide" type="checkbox"> Aim guide</label>
+    <button id="launch">Launch 🚀</button>
+    <button id="clear">Clear all</button>
+  </div>
+  <p id="loading">Loading Python engine…</p>
+  <script type="py" src="./main.py"></script>
+</body>
+</html>
