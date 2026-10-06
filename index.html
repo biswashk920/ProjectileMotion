@@ -18,13 +18,34 @@
     button { padding:10px 20px; border:0; border-radius:8px; font-size:1rem; cursor:pointer; font-weight:600; }
     #launch { background:#f97316; color:#fff; }
     #clear  { background:#334155; color:#e2e8f0; }
+    #planet { background:#1d4ed8; color:#fff; }
     #loading { color:#94a3b8; font-size:.9rem; }
     input:disabled { opacity:.35; }
+
+    /* planet popup */
+    #modal { display:none; position:fixed; inset:0; background:rgba(2,6,23,.75);
+             align-items:center; justify-content:center; z-index:10; }
+    #modal.open { display:flex; }
+    .card { background:#1e293b; border-radius:12px; padding:20px; width:min(380px,92vw);
+            display:flex; flex-direction:column; gap:12px; box-shadow:0 10px 40px rgba(0,0,0,.5); }
+    .card h2 { margin:0; font-size:1.1rem; }
+    .card label { min-width:0; }
+    .card input[type=text], .card select { padding:8px; border-radius:6px; border:1px solid #475569;
+             background:#0f172a; color:#e2e8f0; font-size:1rem; }
+    .row { display:flex; gap:8px; } .row > * { flex:1; }
+    #preview { font-size:.85rem; color:#7dd3fc; min-height:2.4em; }
+    #err { font-size:.85rem; color:#fca5a5; min-height:1.2em; }
+    .btns { display:flex; gap:10px; justify-content:flex-end; }
+    #ok { background:#16a34a; color:#fff; } #cancel { background:#334155; color:#e2e8f0; }
   </style>
 </head>
 <body>
   <h1>🎯 Cannon Lab</h1>
   <canvas id="c" width="900" height="500"></canvas>
+
+  <div class="panel">
+    <button id="planet">🌍 Earth · g = 9.81 m/s²</button>
+  </div>
   <div class="panel">
     <label>Angle: <b id="angleVal">45°</b>
       <input id="angle" type="range" min="0" max="90" value="45"></label>
@@ -39,10 +60,34 @@
       <input id="rest" type="range" min="0.2" max="0.95" step="0.05" value="0.7" disabled></label>
     <label class="inline"><input id="follow" type="checkbox"> Moving frame (follow ball)</label>
     <label class="inline"><input id="guide" type="checkbox"> Aim guide</label>
+    <label class="inline"><input id="sound" type="checkbox" checked> 🔊 Sound</label>
     <button id="launch">Launch 🚀</button>
     <button id="clear">Clear all</button>
   </div>
   <p id="loading">Loading Python engine…</p>
+
+  <div id="modal">
+    <div class="card">
+      <h2>🪐 Choose a planet</h2>
+      <label>Preset
+        <select id="preset">
+          <option>Mercury</option><option>Venus</option><option selected>Earth</option>
+          <option>Moon</option><option>Mars</option><option>Jupiter</option>
+          <option>Saturn</option><option>Uranus</option><option>Neptune</option>
+          <option>Pluto</option><option>Custom</option>
+        </select></label>
+      <div class="row">
+        <label>Mass <input id="mass" type="text" inputmode="decimal" value="1"></label>
+        <label>Mass unit
+          <select id="massUnit"><option value="earth">Earth masses</option><option value="kg">kg</option></select></label>
+      </div>
+      <label>Diameter (km) <input id="diam" type="text" inputmode="decimal" value="12742"></label>
+      <div id="preview"></div>
+      <div id="err"></div>
+      <div class="btns"><button id="cancel">Cancel</button><button id="ok">OK</button></div>
+    </div>
+  </div>
+
   <script type="py" src="./main.py"></script>
 </body>
 </html>
